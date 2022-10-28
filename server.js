@@ -38,7 +38,8 @@ app.post('/api/notes', (req, res) => {
         // create an object with title and text
         const newNote = {
             title,
-            text
+            text,
+            id: uuidv4()
         }
         
         // Add newNote to pre-existing notes in the database
@@ -71,9 +72,6 @@ app.post('/api/notes', (req, res) => {
     }
 });
 
-app.delete('/api/notes/:noteId', (req, res) => {
-
-})
 
 app.listen(PORT, () => {
     console.log(`App listening at http://localhost:${PORT}`);
