@@ -1,8 +1,5 @@
 const express = require('express');
 const PORT = process.env.PORT || 3001;
-const uuid = require('./helper/uuid');
-const database = require('./db/db.json');
-const fs = require('fs');
 const path = require('path');
 const app = express();
 
