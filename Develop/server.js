@@ -21,14 +21,20 @@ app.get('/notes', (req, res) =>
 );
 
 // API Routes
+
+// Should get the json content from db.json 
 app.get('/api/notes', (req, res) => 
-    console.log("yo") 
+    res.json(database)
 );
 
+// Should add note to db.json 
 app.post('/api/notes', (req, res) => 
     console.log('yo')
+
+
 );
 
+// Should delete specific note from db.json
 app.delete('/api/notes/:note_id', (req, res) => 
     console.log("yo")
 );
