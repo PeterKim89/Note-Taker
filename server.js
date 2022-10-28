@@ -23,13 +23,13 @@ app.get('/notes', (req, res) =>
 // API Routes
 
 // Should get the json content from db.json 
-app.get('/api/notes', (req, res) => 
+app.get('/notes', (req, res) => 
     res.json(database)
 );
 
 // Should add note to db.json 
 // Should add a unique id to each note
-app.post('/api/notes', (req, res) => {
+app.post('/notes', (req, res) => {
     // destructuring the note
     const {title, text} = req.body;
     // check to see if both title and text actually exist
@@ -39,8 +39,32 @@ app.post('/api/notes', (req, res) => {
             title,
             text
         }
+        
+        // Add newNote to pre-existing notes in the database
+        fs.readFile('./db/db.json', 'utf8', (err, data) => {
+            // if an error, console log out error
+            if (err) {
+                console.error(err);
+            }
+            // else parse the database json and push the new note to the end
+            else {
+                const notes = JSON.parse(data);
+                notes.push(newNote);
 
+                fs.writeFile('./db/db.json', JSON.stringify(notes), (err) => err ? console.error(err) : console.info('Note has been added.')
+                );
+            }
+        });
 
+        const response = {
+            status: 'Note added.',
+            body: newNote,
+        };
+        res.json(response);
+    }
+
+    else {
+        res.json("Error in adding note");
     }
 });
 
