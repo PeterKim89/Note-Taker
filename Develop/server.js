@@ -34,6 +34,12 @@ app.post('/api/notes', (req, res) => {
     const {title, text} = req.body;
     // check to see if both title and text actually exist
     if (title && text) {
+        // create an object with title and text
+        const newNote = {
+            title,
+            text
+        }
+
 
     }
 });
