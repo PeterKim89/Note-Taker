@@ -1,15 +1,15 @@
 const notes = require("express").Router();
-const database = require("./db/db.json");
+const database = require("../db/db.json");
 const dbPath = "../db/db.json";
-const uuid = require("./helper/uuid");
+const uuid = require("../helper/uuid");
 const fs = require("fs");
 
 notes.get("/api/notes", (req, res) => {
-	readFromFile(database).then((data) => res.json(JSON.parse(data)));
+	res.sendFile(path.join(__dirname, dbPath));
 });
 
 notes.post("/api/notes", (req, res) => {
-	const { title, text, note_id } = req.body;
+	const {title, text, note_id} = req.body;
 	res.json(JSON.parse(data));
 	if (title && text && note_id) {
 		const newNote = {
@@ -17,7 +17,7 @@ notes.post("/api/notes", (req, res) => {
 			text,
 			note_id: uuid(),
 		};
-		fs.readFile(dbPath, "utf8", (err, data) => {
+		fs.readFile(dbPath, 'utf8', (err, data) => {
 			if (err) {
 				console.error(err);
 			} else {
@@ -43,7 +43,7 @@ notes.post("/api/notes", (req, res) => {
         }
 });
 
-notes.delete("/api/notes/:note_id", (req, res) => {
+notes.delete("/:note_id", (req, res) => {
     for (i=0; i<database.length; i++) {
         if (database[i].note_id === req.params.note_id) {
             database.splice(i, 1);
@@ -56,7 +56,9 @@ notes.delete("/api/notes/:note_id", (req, res) => {
 });
 
 
-// when a note is clicked, display it on the right
-notes.get("/:noteId", (req, res) => {
-	res.send(`Get specific note ${req.params.noteId}`);
-});
+// // when a note is clicked, display it on the right
+// notes.get("/:noteId", (req, res) => {
+// 	res.send(`Get specific note ${req.params.noteId}`);
+// });
+
+module.exports = notes;
