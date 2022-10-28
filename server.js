@@ -23,13 +23,13 @@ app.get('/notes', (req, res) =>
 // API Routes
 
 // Should get the json content from db.json 
-app.get('/notes', (req, res) => 
-    res.json(database)
+app.get('/api/notes', (req, res) => 
+    res.sendFile(path.join(__dirname, dbPath))
 );
 
 // Should add note to db.json 
 // Should add a unique id to each note
-app.post('/notes', (req, res) => {
+app.post('/api/notes', (req, res) => {
     // destructuring the note
     const {title, text} = req.body;
     // check to see if both title and text actually exist
@@ -41,7 +41,7 @@ app.post('/notes', (req, res) => {
         }
         
         // Add newNote to pre-existing notes in the database
-        fs.readFile('./db/db.json', 'utf8', (err, data) => {
+        fs.readFile(dbPath, 'utf8', (err, data) => {
             // if an error, console log out error
             if (err) {
                 console.error(err);
@@ -50,16 +50,18 @@ app.post('/notes', (req, res) => {
             else {
                 const notes = JSON.parse(data);
                 notes.push(newNote);
-
-                fs.writeFile('./db/db.json', JSON.stringify(notes), (err) => err ? console.error(err) : console.info('Note has been added.')
+                // 
+                fs.writeFile(dbPath, JSON.stringify(notes), (err) => err ? console.error(err) : console.info('Note has been added.')
                 );
             }
         });
 
+        // creating a response object with status and 
         const response = {
             status: 'Note added.',
             body: newNote,
         };
+        
         res.json(response);
     }
 
@@ -67,6 +69,8 @@ app.post('/notes', (req, res) => {
         res.json("Error in adding note");
     }
 });
+
+
 
 app.listen(PORT, () => {
     console.log(`App listening at http://localhost:${PORT}`);
