@@ -28,16 +28,15 @@ app.get('/api/notes', (req, res) =>
 );
 
 // Should add note to db.json 
-app.post('/api/notes', (req, res) => 
-    console.log('yo')
+// Should add a unique id to each note
+app.post('/api/notes', (req, res) => {
+    // destructuring the note
+    const {title, text} = req.body;
+    // check to see if both title and text actually exist
+    if (title && text) {
 
-
-);
-
-// Should delete specific note from db.json
-app.delete('/api/notes/:note_id', (req, res) => 
-    console.log("yo")
-);
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`App listening at http://localhost:${PORT}`);
