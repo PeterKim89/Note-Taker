@@ -23,7 +23,7 @@ app.get('/notes', (req, res) =>
 
 // API Routes
 
-// Should get the json content from db.json 
+// Should get the json content from db.json and display any notes on the left
 app.get('/api/notes', (req, res) => 
     res.sendFile(path.join(__dirname, dbPath))
 );
@@ -31,11 +31,11 @@ app.get('/api/notes', (req, res) =>
 // Should add note to db.json 
 // Should add a unique id to each note
 app.post('/api/notes', (req, res) => {
-    // destructuring the note
+    // destructuring the note into title and text
     const {title, text} = req.body;
     // check to see if both title and text actually exist
     if (title && text) {
-        // create an object with title and text
+        // create an object with title and text and unique id
         const newNote = {
             title,
             text,
@@ -48,11 +48,10 @@ app.post('/api/notes', (req, res) => {
             if (err) {
                 console.error(err);
             }
-            // else parse the database json and push the new note to the end
+            // else push the new note to the end of the notes database 
             else {
                 const notes = JSON.parse(data);
                 notes.push(newNote);
-                // 
                 fs.writeFile(dbPath, JSON.stringify(notes), (err) => err ? console.error(err) : console.info('Note has been added.')
                 );
             }
@@ -72,6 +71,17 @@ app.post('/api/notes', (req, res) => {
     }
 });
 
+app.delete('/api/notes/:id', (req, res) => {
+    // search db.json for specific id
+    for (i=0; i<database.length; i++) {
+        if (database[i].id === req.params.id) {
+            // delete the object containing the id 
+            database.splice(i, 1);
+        }
+    }
+    // return the updated json
+    res.json(database);
+});
 
 app.listen(PORT, () => {
     console.log(`App listening at http://localhost:${PORT}`);
