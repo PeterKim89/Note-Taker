@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 const database = require('./db/db.json');
 const dbPath = './db/db.json';
 const fs = require('fs');
@@ -70,7 +71,9 @@ app.post('/api/notes', (req, res) => {
     }
 });
 
+app.delete('/api/notes/:noteId', (req, res) => {
 
+})
 
 app.listen(PORT, () => {
     console.log(`App listening at http://localhost:${PORT}`);
