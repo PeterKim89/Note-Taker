@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-// node package to create unique ids
 const { v4: uuidv4 } = require('uuid');
 const database = require('./db/db.json');
 const dbPath = './db/db.json';
@@ -78,18 +77,12 @@ app.delete('/api/notes/:id', (req, res) => {
         if (database[i].id === req.params.id) {
             // delete the object containing the id 
             database.splice(i, 1);
-            return database;
         }
     }
-    // updates the db.json with the deleted note
-    fs.writeFile(dbPath, JSON.stringify(database), (err) => {
-        err ? console.log(err) : console.log("Note was deleted.");
-    });
-    // return the updated db.json
+    // return the updated json
     res.json(database);
 });
 
 app.listen(PORT, () => {
     console.log(`App listening at http://localhost:${PORT}`);
-
 });
