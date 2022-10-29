@@ -1,11 +1,10 @@
 # Note-Taker
 
 ## Demo
-
+https://watch.screencastify.com/v/G9ZvyK1KFgYxDYaVl8k3
 
 ## Introduction
-This project lets the user write notes and save them in their browser. You can pull up saved notes and see what you wrote in them. Or you can delete any unnecessary ones.
-
+This project lets the user write notes and save them in their browser. You can pull up saved notes and see what you wrote in them.
 ## Installation
 ```
 npm i
