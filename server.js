@@ -71,17 +71,6 @@ app.post('/api/notes', (req, res) => {
     }
 });
 
-app.delete('/api/notes/:id', (req, res) => {
-    // search db.json for specific id
-    for (i=0; i<database.length; i++) {
-        if (database[i].id === req.params.id) {
-            // delete the object containing the id 
-            database.splice(i, 1);
-        }
-    }
-    // return the updated json
-    res.json(database);
-});
 
 app.listen(PORT, () => {
     console.log(`App listening at http://localhost:${PORT}`);
